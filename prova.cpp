@@ -16,6 +16,9 @@ int main(){
     a = somma();
     b = moltiplicazione();
 
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
+
     return 0;
 
 
@@ -33,14 +36,9 @@ int somma(){
 
 int moltiplicazione(){
 
-    int num 1 = 2, num2 = 4, risultato = 0;
+    int num1 = 2, num2 = 4, risultato = 0;
 
     risultato = num1 * num2;
 
     return risultato;
-}
-
-int potenza(){
-
-
 }
