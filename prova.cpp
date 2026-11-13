@@ -53,12 +53,10 @@ int potenza(int base, int esponente ){
 
     int risultato = 1;
 
-    for(int i = 0; i < esponente, i++;){
+    for(int i = 0; i < esponente; i++){
 
         risultato *=base;
     }
-
-    risultato = base;
 
     return risultato;
 }
