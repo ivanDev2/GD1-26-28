@@ -3,15 +3,19 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class player{
 
     private:
         std::string nickname;
-        int difesa;
-        int attacco;
-        int velocità;
+        int difesa{};
+        int attacco{};
+        int velocità{};
 
     public:
+        player() = default;
+
         player(std::string inNickname, int inDifesa, int inAttacco, int inVelocità){
 
             nickname = inNickname;
@@ -26,17 +30,17 @@ class player{
         void Insertnickname()
         {
             std::cout << "insert your nickname: ";
-            std::getline(std::cin, nickname);
+            std::cin >> nickname;
             std::cout << "Your nickname is: " << nickname << std::endl;
         }
 
         void Printdifesa()
         {
             std::cout << "insert your difesa: ";
+            std::cin >> difesa;
             if(difesa < 0 || difesa > 150){
                 std::cout << "invalid value " << std::endl;
             } else {
-                std::getline(std::cin, difesa);
                 std::cout << "Your difesa is: " << difesa << std::endl;
             }
             
@@ -45,10 +49,10 @@ class player{
         void Printattacco()
         {
             std::cout << "insert your attacco: ";
+            std::cin >> attacco;
             if(attacco < 0 || attacco > 70){
                 std::cout << "invalid value " << std::endl;
             } else {
-                std::getline(std::cin, attacco);
                 std::cout << "Your attacco is: " << attacco << std::endl;
             }
         }
@@ -56,10 +60,10 @@ class player{
         void Printvelocità()
         {
             std::cout << "insert your velocità: ";
+            std::cin >> velocità;
             if(velocità < 0 || velocità > 100){
                 std::cout << "invalid value " << std::endl;
             } else {
-                std::getline(std::cin, velocità);
                 std::cout << "Your velocità is: " << velocità << std::endl;
             }
         }
