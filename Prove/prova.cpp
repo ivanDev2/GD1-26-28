@@ -3,13 +3,12 @@
 int somma(int a, int b);
 int potenza(int a, int b);
 int moltiplicazione(int a, int b);
-
-
+int divisione(int a, int b);
 
 
 int main(){
 
-    int a,b,c;
+    int a,b,c,d;
     int num1 = 4;
     int num2 = 3;
     int base = 4; 
@@ -19,10 +18,12 @@ int main(){
     a = somma(num1, num2);
     b = moltiplicazione(num1, num2);
     c =potenza(base, esponente);
+    d = divisione(num1, num2);
 
     std::cout << a << std::endl;
     std::cout << b << std::endl;
     std::cout << c << std::endl;
+    std::cout << d << std::endl;
 
 
     return 0;
@@ -59,4 +60,18 @@ int potenza(int base, int esponente ){
     }
 
     return risultato;
+}
+
+int divisione(int num1, int num2){
+
+    int risultato = 0;
+
+    risultato = num1 / num2;
+    int resto = num1 % num2;
+    std::cout << "Il resto della divisione è: " << resto << std::endl;
+
+
+    return risultato;
+
+   
 }
