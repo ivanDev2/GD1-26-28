@@ -8,12 +8,12 @@ private:
     std::string nickname;
     int difesa{}; // difesa del player
     int attacco{}; // attacco del player
-    int velocità{1.5}; // velocità del player in m/s 
+    double velocità{1.5}; // velocità del player in m/s 
     double x{0.0}; // posizione del player sull'asse x 
 
 public:
     player() = default;
-    player(std::string inNickname, int inDifesa, int inAttacco, int inVelocità);
+    player(std::string inNickname, int inDifesa, int inAttacco, double inVelocità);
     void Insertnickname(); // funzione per inserire il nickname del player
     void Printdifesa(); // funzione per stampare la difesa del player
     void Printattacco(); // funzione per stampare l'attacco del player

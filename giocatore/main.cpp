@@ -14,9 +14,9 @@ int main() {
     //p.Printvelocità();
 
     char scelta;
-    
+
     while (true) {
-        std::cout << "Move forward with w, backward with s (or Q to quit): ";
+        std::cout << "Move forward with w, backward with s, or run with r, run backward with f (or Q to quit): ";
         std::cin >> scelta;
 
         if (scelta == 'q' || scelta == 'Q') {
@@ -25,5 +25,6 @@ int main() {
 
         p.muovi(scelta);
     }
+    
     return 0;
 }
