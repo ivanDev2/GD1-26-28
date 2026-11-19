@@ -15,7 +15,7 @@ int main() {
 
     char scelta;
     while (true) {
-        std::cout << "Move forward with D, backward with A (or Q to quit): ";
+        std::cout << "Move forward with w, backward with s (or Q to quit): ";
         std::cin >> scelta;
 
         if (scelta == 'q' || scelta == 'Q') {
