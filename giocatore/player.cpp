@@ -73,4 +73,4 @@ void player::muovi(char direzione)
 
     std::cout << nickname << "moved to position:" << x << std::endl;
 }
-}
+
