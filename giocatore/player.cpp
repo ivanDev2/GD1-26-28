@@ -47,47 +47,19 @@ void player::Printattacco()
     }
 }
 
-/*void player::Printvelocità()
-{
-    std::cout << "insert your velocità in m/s: ";
-    std::cin >> velocità;
-    if (velocità < 0 || velocità > 100)
-    {
-        std::cout << "invalid value " << std::endl;
+void player::AggiornaMovimento(char tasto, double dt) {
+    if (tasto == 'd' || tasto == 'D') {
+        x += velocità * dt;
     }
-    else
-    {
-        std::cout << "Your velocità is: " << velocità << std::endl;
+    else if (tasto == 'a' || tasto == 'A') {
+        x -= velocità * dt;
     }
-}*/
-
-void player::muovi(char direzione)
-{
-    const double tempopasso = 1.0; 
-
-    double distanza = 0;
-
-    const double velcamminata = 1.5;
-    const double velcorsa = 3.0;
-
-    if(direzione == 'w' || direzione == 'W'){
-        velocità = velcamminata;
-        x+=velocità * tempopasso;
-        std::cout << "Player " << nickname << " moved to position relative to the start forward by: 1.5 m" << std::endl;
-    }else if(direzione == 's' || direzione == 'S'){
-        velocità = velcamminata;
-        x-=velocità * tempopasso;
-        std::cout << "Player " << nickname << " moved to position relative to the start backward by: 1.5 m" << std::endl;  
-    }else if(direzione == 'r' || direzione == 'R'){
-        velocità = velcorsa;
-        x+=velocità * tempopasso;
-        std::cout << "Player " << nickname << " moved to position relative to the start forward by: 3.0 m" << std::endl;
-    }else if(direzione == 'f' || direzione == 'F'){
-        velocità = velcorsa;
-        x-=velocità * tempopasso;
-        std::cout << "Player " << nickname << " moved to position relative to the start backward by: 3.0 m" << std::endl;
-    }
-
-    std::cout << "Current position of player " << nickname << " is: " << x << " m" << std::endl;
 }
 
+double player::GetX() const {
+    return x;
+}
+
+std::string player::GetNickname() const {
+    return nickname;
+}
