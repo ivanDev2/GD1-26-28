@@ -59,8 +59,18 @@ void player::Printvelocità()
     {
         std::cout << "Your velocità is: " << velocità << std::endl;
     }
-
+}
 void player::muovi(char direzione)
 {
+    if(direzione == 'w' || direzione == 'W'){
+        x+=velocità;
+    }else if(direzione == 's' || direzione == 'S'){
+        x-=velocità;
+    }else{
+        std::cout << "invalid direction" << std::endl;
+        return;
+    }
+
+    std::cout << nickname << "moved to position:" << x << std::endl;
 }
 }
