@@ -12,5 +12,17 @@ int main() {
     p.Printdifesa();
     p.Printattacco();
     p.Printvelocità();
+
+    char scelta;
+    while (true) {
+        std::cout << "Move forward with D, backward with A (or Q to quit): ";
+        std::cin >> scelta;
+
+        if (scelta == 'q' || scelta == 'Q') {
+            break;
+        }
+
+        p.muovi(scelta);
+    }
     return 0;
 }
