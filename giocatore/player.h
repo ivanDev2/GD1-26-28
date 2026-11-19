@@ -9,6 +9,7 @@ private:
     int difesa{};
     int attacco{};
     int velocità{};
+    int x{0};
 
 public:
     player() = default;
@@ -17,6 +18,7 @@ public:
     void Printdifesa();
     void Printattacco();
     void Printvelocità();
+    void muovi(char direzione);
 };
 
 #endif
