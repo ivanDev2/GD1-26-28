@@ -47,9 +47,9 @@ void player::Printattacco()
     }
 }
 
-void player::Printvelocità()
+/*void player::Printvelocità()
 {
-    std::cout << "insert your velocità: ";
+    std::cout << "insert your velocità in m/s: ";
     std::cin >> velocità;
     if (velocità < 0 || velocità > 100)
     {
@@ -59,18 +59,26 @@ void player::Printvelocità()
     {
         std::cout << "Your velocità is: " << velocità << std::endl;
     }
-}
+}*/
+
 void player::muovi(char direzione)
 {
+    const double tempopasso = 1.0; 
+
+    const double velcamminata = 1.5;
+    //const double velcorsa = 3.0;
+
     if(direzione == 'w' || direzione == 'W'){
-        x+=velocità;
+        velocità = velcamminata;
+        x+=velocità * tempopasso;
+        std::cout << nickname << "walks forward by " << x << " m" << std::endl;
     }else if(direzione == 's' || direzione == 'S'){
-        x-=velocità;
+        velocità = velcamminata;
+        x-=velocità * tempopasso;
+        std::cout << nickname << "walks backward by " << x << " m" << std::endl;
     }else{
         std::cout << "invalid direction" << std::endl;
         return;
     }
-
-    std::cout << nickname << "moved to position:" << x << std::endl;
 }
 

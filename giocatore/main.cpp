@@ -11,9 +11,10 @@ int main() {
     p.Insertnickname();
     p.Printdifesa();
     p.Printattacco();
-    p.Printvelocità();
+    //p.Printvelocità();
 
     char scelta;
+    
     while (true) {
         std::cout << "Move forward with w, backward with s (or Q to quit): ";
         std::cin >> scelta;
