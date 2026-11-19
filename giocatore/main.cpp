@@ -2,81 +2,15 @@
 
 #include <iostream>
 #include <string>
+#include "player.h"
 
 using namespace std;
 
-class player{
-
-    private:
-        std::string nickname;
-        int difesa{};
-        int attacco{};
-        int velocità{};
-
-    public:
-        player() = default;
-
-        player(std::string inNickname, int inDifesa, int inAttacco, int inVelocità){
-
-            nickname = inNickname;
-            difesa = inDifesa;
-            attacco = inAttacco;
-            velocità = inVelocità;
-
-            std::cout << "created new caracter with nickname: " << nickname << " difesa: " << difesa << " attacco: " << attacco << " velocità: " << velocità << std::endl;
-
-        }
-
-        void Insertnickname()
-        {
-            std::cout << "insert your nickname: ";
-            std::cin >> nickname;
-            std::cout << "Your nickname is: " << nickname << std::endl;
-        }
-
-        void Printdifesa()
-        {
-            std::cout << "insert your difesa: ";
-            std::cin >> difesa;
-            if(difesa < 0 || difesa > 150){
-                std::cout << "invalid value " << std::endl;
-            } else {
-                std::cout << "Your difesa is: " << difesa << std::endl;
-            }
-            
-        }
-        
-        void Printattacco()
-        {
-            std::cout << "insert your attacco: ";
-            std::cin >> attacco;
-            if(attacco < 0 || attacco > 70){
-                std::cout << "invalid value " << std::endl;
-            } else {
-                std::cout << "Your attacco is: " << attacco << std::endl;
-            }
-        }
-
-        void Printvelocità()
-        {
-            std::cout << "insert your velocità: ";
-            std::cin >> velocità;
-            if(velocità < 0 || velocità > 100){
-                std::cout << "invalid value " << std::endl;
-            } else {
-                std::cout << "Your velocità is: " << velocità << std::endl;
-            }
-        }
-};
-
-int main(){
-
+int main() {
     player p;
-
     p.Insertnickname();
     p.Printdifesa();
     p.Printattacco();
     p.Printvelocità();
-
     return 0;
 }
