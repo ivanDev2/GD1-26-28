@@ -1,21 +1,20 @@
-//creare un programma che permette di chiedere in input il nickname, la difesa, l'attacco e la velocità (noi andremo a sceglier il valore massimo per difesa attacco e velocità).
-
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <iomanip>
+#include <string>
 #include "player.h"
 
 using namespace std;
 
-// Funzione per leggere un tasto su Linux/Mac senza premere Invio
 char leggiTastoNonBloccante() {
     struct termios oldt, newt;
     tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO); // Disattiva l'attesa di Invio e la stampa del carattere
+    newt.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
     int oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
@@ -24,7 +23,6 @@ char leggiTastoNonBloccante() {
     char ch = 0;
     read(STDIN_FILENO, &ch, 1);
 
-    // Ripristina le impostazioni normali del terminale
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     fcntl(STDIN_FILENO, F_SETFL, oldf);
 
@@ -37,16 +35,29 @@ int main() {
     p.Printdifesa();
     p.Printattacco();
 
-    std::cout << "\nHold [D] to move forward, [A] to move back, [Q] to quit.\n" << std::endl;
+    std::cout << "\nHold [W] forward, [S] back, [A] left, [D] right, [Q] to quit.\n" << std::endl;
 
     auto tempoPrecedente = std::chrono::steady_clock::now();
-    double posizionePrecedente = p.GetX();
+    double xPrecedente = p.GetX();
+    double yPrecedente = p.GetY();
+    std::string direzioneTesto = "";
 
     while (true) {
         char tasto = leggiTastoNonBloccante();
 
         if (tasto == 'q' || tasto == 'Q') {
             break;
+        }
+
+        // Aggiorna il testo della direzione solo quando premi un tasto valido
+        if (tasto == 'w' || tasto == 'W') {
+            direzioneTesto = "moving forward";
+        } else if (tasto == 's' || tasto == 'S') {
+            direzioneTesto = "moving back";
+        } else if (tasto == 'a' || tasto == 'A') {
+            direzioneTesto = "moving left";
+        } else if (tasto == 'd' || tasto == 'D') {
+            direzioneTesto = "moving right";
         }
 
         auto tempoAttuale = std::chrono::steady_clock::now();
@@ -56,9 +67,15 @@ int main() {
 
         p.AggiornaMovimento(tasto, dt);
 
-        if (p.GetX() != posizionePrecedente) {
-            std::cout << "\r" << p.GetNickname() << " is at " << p.GetX() << " m from start    " << std::flush;
-            posizionePrecedente = p.GetX();
+        // Stampa sulla stessa riga (\r) solo quando la posizione cambia
+        if (p.GetX() != xPrecedente || p.GetY() != yPrecedente) {
+            std::cout << "\r" << p.GetNickname() << " is " << direzioneTesto 
+                      << " | Position: (" << std::fixed << std::setprecision(2) 
+                      << p.GetX() << " m, " << p.GetY() << " m) from start          " 
+                      << std::flush;
+
+            xPrecedente = p.GetX();
+            yPrecedente = p.GetY();
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(16));

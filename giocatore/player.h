@@ -10,6 +10,7 @@ private:
     int attacco{};
     double velocità{2.5};
     double x{0.0};
+    double y{0.0};
 
 public:
     player() = default;
@@ -17,8 +18,10 @@ public:
     void Insertnickname();
     void Printdifesa();
     void Printattacco();
+    void printstats();
     void AggiornaMovimento(char tasto, double dt);
     double GetX() const;
+    double GetY() const;
     std::string GetNickname() const;
 };
 
