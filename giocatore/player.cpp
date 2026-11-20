@@ -42,10 +42,12 @@ void player::Printattacco()
 }
 
 void player::printstats() {
+    std::cout << "--------------------------" << std::endl;
     std::cout << "Player Stats:\n";
     std::cout << "Nickname: " << nickname << "\n";
     std::cout << "Defense: " << difesa << "\n";
     std::cout << "Attack: " << attacco << "\n";
+    std::cout << "--------------------------" << std::endl;
 }
 
 void player::AggiornaMovimento(char tasto, double dt) {

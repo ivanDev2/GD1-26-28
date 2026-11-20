@@ -34,6 +34,7 @@ int main() {
     p.Insertnickname();
     p.Printdifesa();
     p.Printattacco();
+    p.printstats();
 
     std::cout << "\nHold [W] forward, [S] back, [A] left, [D] right, [Q] to quit.\n" << std::endl;
 
