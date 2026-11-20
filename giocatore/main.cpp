@@ -79,9 +79,8 @@ int main() {
             yPrecedente = p.GetY();
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-
     std::cout << "\nGame over." << std::endl;
     return 0;
 }
