@@ -14,9 +14,9 @@ void dungeon::generate(){
     // place the exit room at the bottom right corner
     rooms[rows - 1][cols - 1] = roomType::Exit;
 
-    placeRooms(static_cast<int>(roomType::Enemy), 10); // place 10 enemy rooms
-    placeRooms(static_cast<int>(roomType::Trap), 5); // place 5 trap rooms
-    placeRooms(static_cast<int>(roomType::Loot), 5); // place 5 loot rooms
+    placeRooms(static_cast<int>(roomType::Enemy), 4); // place 10 enemy rooms
+    placeRooms(static_cast<int>(roomType::Trap), 2); // place 5 trap rooms
+    placeRooms(static_cast<int>(roomType::Loot), 2); // place 5 loot rooms
     placeRooms(static_cast<int>(roomType::Boss), 1); // place 1 boss room
 
 }
@@ -78,7 +78,7 @@ void dungeon::print(const player& p) const
                         
                 }
             }
-            std::cout << "|" << simbol << " ";
+            std::cout << "| " << simbol << " ";
         }
         std::cout <<"|\n";
     }
@@ -93,7 +93,7 @@ void dungeon::print(const player& p) const
 
 bool dungeon::isValidMove(int x, int y) const
 {
-    return( x >= 0 && x <= rows && y >= 0 && y <= cols);
+    return( x >= 0 && x < rows && y >= 0 && y < cols);
 
 }
 
