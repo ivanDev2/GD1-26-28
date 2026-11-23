@@ -28,7 +28,7 @@ private:
 
 public:
     dungeon(int r=10, int c=10);
-    ~dungeon();
+    ~dungeon() = default;
 
     void generate(); // method to generate the dungeon layout
 
