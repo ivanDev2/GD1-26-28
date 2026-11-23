@@ -24,7 +24,7 @@ private:
     int cols{};
     std::vector<std::vector<roomType>> rooms; // 2D vector to represent the dungeon layout
 
-    void generateDungeon(int inRows, int inCols); // method to generate the dungeon layout
+    void placeRooms(int type, int count); // method to generate the dungeon layout
 
 public:
     dungeon(int r=10, int c=10);
@@ -32,7 +32,7 @@ public:
 
     void generate(); // method to generate the dungeon layout
 
-    void printPlayer(const player& p) const; // method to print the player's position in the dungeon
+    void print(const player& p) const; // method to print the player's position in the dungeon
     
     bool isValidMove(int x, int y) const; // method to check if the player's move is valid
 

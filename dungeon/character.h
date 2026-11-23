@@ -29,7 +29,8 @@ public:
 class player : public character
 {
 private:
-    int luck{};
+    int posX{0};
+    int posY{0};
 
 public:
     player() = default; // default constructor
@@ -39,6 +40,10 @@ public:
     void randomDefence(); // method to generate a random defence value based on the character's
     void randomLuck(); // method to generate a random luck value based on the character's
     void PrintStats(); // print player stats
+
+    int getX() const { return posX; }
+    int getY() const { return posY; }
+    void setPosition(int newX, int newY) { posX = newX; posY = newY; }
 };
 
 
