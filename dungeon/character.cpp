@@ -12,7 +12,7 @@ character::character(std::string inName, int inHP, int inAttack, int inDefence, 
     attack = inAttack;
     defence = inDefence;
     speed = inSpeed;
-    std::cout << "created new character with name: " << name << " HP: " << HP << " attack: " << attack << " defence: " << defence << " speed: " << speed << std::endl;
+    //std::cout << "created new character with name: " << name << " HP: " << HP << " attack: " << attack << " defence: " << defence << " speed: " << speed << std::endl;
 }
 
 void character::takeDamage(int dmg)
@@ -139,7 +139,7 @@ void player::openInventory()
     {
         case ItemCategory::potion:
             heal(selected.value);
-            std::cout << "You drink " << selected.name << "! Current HP: " << HP << "/" << maxHP << "\n";
+            std::cout << "You drink " << selected.name << " ! Current HP: " << HP << " /" << maxHP << "\n";
             inventory.erase(inventory.begin() + index);
             break;
 
@@ -150,7 +150,7 @@ void player::openInventory()
             }
             equippedWeapon = selected;
             inventory.erase(inventory.begin() + index);
-            std::cout << "You have equipped: " << equippedWeapon.name << "!\n";
+            std::cout << "You have equipped: " << equippedWeapon.name << " !\n";
             break;
 
         case ItemCategory::armor:
@@ -167,12 +167,12 @@ void player::openInventory()
             if (selected.name.find("Clover") != std::string::npos)
             {
                 luck += selected.value;
-                std::cout << "Your Luck increases by " << selected.value << "! (Luck: " << luck << ")\n";
+                std::cout << "Your Luck increases by " << selected.value << " ! (Luck: " << luck << ")\n";
             }
             else
             {
                 speed += selected.value;
-                std::cout << "Your Speed ​​increases by" << selected.value << "! (Speed: " << speed << ")\n";
+                std::cout << "Your Speed ​​increases by" << selected.value << " ! (Speed: " << speed << ")\n";
             }
             inventory.erase(inventory.begin() + index);
             break;

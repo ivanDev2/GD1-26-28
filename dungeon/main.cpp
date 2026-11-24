@@ -21,9 +21,9 @@ bool startCombat(player& p, enemy& e)
     // Chi ha la Speed più alta inizia per primo
     bool playerTurn = (p.getSpeed() >= e.getSpeed());
     if (playerTurn)
-        std::cout << "You're faster! You attack first..\n";
+        std::cout << "You're faster! You attack first .\n";
     else
-        std::cout << e.getName() << " It is faster and attacks first.!\n";
+        std::cout << e.getName() << " It is faster and attacks first !\n";
 
     while (p.isAlive() && e.isAlive())
     {
@@ -53,7 +53,7 @@ bool startCombat(player& p, enemy& e)
                 if (critRoll(gen) <= p.getLuck())
                 {
                     damage *= 2;
-                    std::cout << "CRITICAL HIT!";
+                    std::cout << "CRITICAL HIT ! ";
                 }
 
                 e.takeDamage(damage);
@@ -67,7 +67,7 @@ bool startCombat(player& p, enemy& e)
             if (damage < 1) damage = 1;
 
             p.takeDamage(damage);
-            std::cout << e.getName() << "inflicts upon you" << damage << " damages!\n";
+            std::cout << e.getName() << " inflicts upon you " << damage << " damages!\n";
         }
 
         playerTurn = !playerTurn;
