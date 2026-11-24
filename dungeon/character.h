@@ -91,6 +91,8 @@ class enemy : public character
 public:
     enemy() = default; // default constructor
     enemy(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed); // constructor
+
+    virtual int calculateAttackDamage() const { return attack; }
 };
 
 // class goblin
@@ -100,6 +102,7 @@ public:
     goblin(); // default constructor
     goblin(int inHP, int inAttack, int inDefence, double inSpeed); // constructor
     void insertStats(); // insert stats of the goblin
+    int calculateAttackDamage() const override; // rapid shot
 };
 
 // class skeleton
@@ -117,7 +120,8 @@ class orc : public enemy
 public:
     orc(); // default constructor
     orc(int inHP, int inAttack, int inDefence, double inSpeed); // constructor   
-    void insertStats(); // insert stats of the orc     
+    void insertStats(); // insert stats of the orc  
+    int calculateAttackDamage() const override; // rage   
 };
 
 // class dragon
@@ -127,6 +131,7 @@ public:
     dragon(); // default constructor
     dragon(int inHP, int inAttack, int inDefence, double inSpeed); // constructor
     void insertStats(); // insert stats of the dragon
+    int calculateAttackDamage() const override; // flame 
 };
 
 #endif

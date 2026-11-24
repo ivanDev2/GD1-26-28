@@ -15,15 +15,15 @@ bool startCombat(player& p, enemy& e)
     std::uniform_int_distribution<> critRoll(1, 100);
 
     std::cout << "\n========================================\n";
-    std::cout << "COMBATTIMENTO CONTRO: " << e.getName() << "!\n";
+    std::cout << "COMBAT AGAINST: " << e.getName() << "!\n";
     std::cout << "========================================\n";
 
     // Chi ha la Speed più alta inizia per primo
     bool playerTurn = (p.getSpeed() >= e.getSpeed());
     if (playerTurn)
-        std::cout << "Sei piu' veloce! Attacchi per primo.\n";
+        std::cout << "You're faster! You attack first..\n";
     else
-        std::cout << e.getName() << " e' piu' veloce e attacca per primo!\n";
+        std::cout << e.getName() << " It is faster and attacks first.!\n";
 
     while (p.isAlive() && e.isAlive())
     {
@@ -36,7 +36,7 @@ bool startCombat(player& p, enemy& e)
             p.updateStatusEffects();
             if (!p.isAlive()) break;
 
-            std::cout << "Scegli azione (1 = Attacca, 2 = Inventario/Usa Pozione): ";
+            std::cout << "Choose action (1 = Attack, 2 = Inventory/Use Potion): ";
             int choice{};
             std::cin >> choice;
 
@@ -53,11 +53,11 @@ bool startCombat(player& p, enemy& e)
                 if (critRoll(gen) <= p.getLuck())
                 {
                     damage *= 2;
-                    std::cout << "COLPO CRITICO! ";
+                    std::cout << "CRITICAL HIT!";
                 }
 
                 e.takeDamage(damage);
-                std::cout << "Infliggi " << damage << " danni a " << e.getName() << "!\n";
+                std::cout << "Inflict " << damage << " damage to " << e.getName() << "!\n";
             }
         }
         else
@@ -67,7 +67,7 @@ bool startCombat(player& p, enemy& e)
             if (damage < 1) damage = 1;
 
             p.takeDamage(damage);
-            std::cout << e.getName() << " ti infligge " << damage << " danni!\n";
+            std::cout << e.getName() << "inflicts upon you" << damage << " damages!\n";
         }
 
         playerTurn = !playerTurn;
@@ -75,12 +75,12 @@ bool startCombat(player& p, enemy& e)
 
     if (p.isAlive())
     {
-        std::cout << "\nHai sconfitto " << e.getName() << "!\n";
+        std::cout << "\nYou have defeated " << e.getName() << "!\n";
         return true;
     }
     else
     {
-        std::cout << "\nSei stato sconfitto da " << e.getName() << "...\n";
+        std::cout << "\nYou have been defeated by " << e.getName() << "...\n";
         return false;
     }
 }
@@ -109,12 +109,12 @@ int main() {
         std::cout << "\n";
         dungeon.print(p);
 
-        std::cout << "Comandi (W/A/S/D = Muovi, I = Inventario, P = Stats, Q = Esci): ";
+        std::cout << "Controls (W/A/S/D = Move, I = Inventory, P = Stats, Q = Exit): ";
         std::cin >> input;
         input = std::toupper(input);
 
         if (input == 'Q') {
-            std::cout << "Partita terminata.\n";
+            std::cout << "Match finished.\n";
             break;
         }
         if (input == 'I') {
@@ -135,13 +135,13 @@ int main() {
             case 'A': nextY--; break;
             case 'D': nextY++; break;
             default:
-                std::cout << "Tasto non valido! Usa W, A, S, D, I o P.\n";
+                std::cout << "Invalid key! Use W, A, S, D, I, or P.\n";
                 continue;
         }
 
         // Edge control
         if (!dungeon.isValidMove(nextX, nextY)) {
-            std::cout << "Muro! Non puoi andare in quella direzione.\n";
+            std::cout << "Wall! You can't go in that direction.\n";
             continue;
         }
 
@@ -150,7 +150,7 @@ int main() {
         p.updateStatusEffects();
 
         if (!p.isAlive()) {
-            std::cout << "\nIl veleno ti ha ucciso! GAME OVER.\n";
+            std::cout << "\nThe poison killed you! GAME OVER.\n";
             break;
         }
 
@@ -159,7 +159,7 @@ int main() {
 
         switch (room) {
             case roomType::Empty:
-                std::cout << "Stanza vuota.\n";
+                std::cout << "Empty room.\n";
                 break;
 
             case roomType::Enemy:
@@ -186,7 +186,7 @@ int main() {
                 t.trigger(p);
 
                 if (!p.isAlive()) {
-                    std::cout << "Sei morto nella trappola! GAME OVER.\n";
+                    std::cout << "You died in the trap! GAME OVER.\n";
                     isPlaying = false;
                 } else {
                     dungeon.clearrooms(nextX, nextY);
@@ -195,19 +195,19 @@ int main() {
             }
 
             case roomType::Loot:
-                std::cout << "Tesoro trovato!\n";
+                std::cout << "Treasure found!\n";
                 p.addItem(generateRandomLoot());
                 dungeon.clearrooms(nextX, nextY);
                 break;
 
             case roomType::Boss:
             {
-                std::cout << "Il Drago Boss e' qui!\n";
+                std::cout << "The Boss Dragon is here!\n";
                 dragon boss;
                 if (startCombat(p, boss)) {
-                    std::cout << "\nINCREDIBILE! Hai sconfitto il Drago e completato il dungeon! VITTORIA!\n";
+                    std::cout << "\nINCREDIBLE! You’ve defeated the Dragon and completed the dungeon! VICTORY!\n";
                 } else {
-                    std::cout << "\nIl Drago ti ha sconfitto... GAME OVER.\n";
+                    std::cout << "\nThe dragon has defeated you... GAME OVER.\n";
                 }
                 isPlaying = false;
                 break;
@@ -215,7 +215,7 @@ int main() {
 
             case roomType::Exit:
                 dungeon.print(p);
-                std::cout << "Hai trovato l'uscita! Vittoria!\n";
+                std::cout << "You found the exit! Victory!\n";
                 isPlaying = false;
                 break;
         }

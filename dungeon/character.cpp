@@ -79,6 +79,10 @@ void player::randomLuck()
 
 void player::PrintStats()
 {
+    std::cout << "============================" << std::endl;
+    std::cout << "         Welcome to:        " << std::endl;
+    std::cout << "    THE SCORCHING DUNGEON   " << std::endl;
+    std::cout << "============================" << std::endl;
     std::cout << "--------------------------" << std::endl;
     std::cout << "Player Stats:\n";
     std::cout << "Name: " << name << "\n";
@@ -102,13 +106,13 @@ void player::addItem(const Item& newitem)
 void player::openInventory()
 {
     std::cout << "\n=== CURRENT EQUIPMENT ===\n";
-    std::cout << "Arma: " << equippedWeapon.name << " (+" << equippedWeapon.value << " ATK)\n";
-    std::cout << "Armatura: " << equippedArmor.name << " (+" << equippedArmor.value << " DEF)\n";
+    std::cout << "Wepon: " << equippedWeapon.name << " (+" << equippedWeapon.value << " ATK)\n";
+    std::cout << "Armor: " << equippedArmor.name << " (+" << equippedArmor.value << " DEF)\n";
 
-    std::cout << "\n=== ZAINO ===\n";
+    std::cout << "\n=== BACKPACK ===\n";
     if (inventory.empty())
     {
-        std::cout << "Lo zaino e' vuoto.\n";
+        std::cout << "The backpack is empty.\n";
         return;
     }
 
@@ -118,13 +122,13 @@ void player::openInventory()
         inventory[i].print();
     }
 
-    std::cout << "Scegli il numero dell'oggetto da usare/equipaggiare (0 per chiudere): ";
+    std::cout << "Choose the number of the item to use/equip (0 to close): ";
     int choice{};
     std::cin >> choice;
 
     if (choice <= 0 || choice > static_cast<int>(inventory.size()))
     {
-        std::cout << "Zaino chiuso.\n";
+        std::cout << "Closed backpack.\n";
         return;
     }
 
@@ -146,7 +150,7 @@ void player::openInventory()
             }
             equippedWeapon = selected;
             inventory.erase(inventory.begin() + index);
-            std::cout << "Hai equipaggiato: " << equippedWeapon.name << "!\n";
+            std::cout << "You have equipped: " << equippedWeapon.name << "!\n";
             break;
 
         case ItemCategory::armor:
@@ -156,19 +160,19 @@ void player::openInventory()
             }
             equippedArmor = selected;
             inventory.erase(inventory.begin() + index);
-            std::cout << "Hai indossato: " << equippedArmor.name << "!\n";
+            std::cout << "You wore: " << equippedArmor.name << "!\n";
             break;
 
         case ItemCategory::special:
             if (selected.name.find("Clover") != std::string::npos)
             {
                 luck += selected.value;
-                std::cout << "La tua Fortuna aumenta di " << selected.value << "! (Luck: " << luck << ")\n";
+                std::cout << "Your Luck increases by " << selected.value << "! (Luck: " << luck << ")\n";
             }
             else
             {
                 speed += selected.value;
-                std::cout << "La tua Velocita' aumenta di " << selected.value << "! (Speed: " << speed << ")\n";
+                std::cout << "Your Speed ​​increases by" << selected.value << "! (Speed: " << speed << ")\n";
             }
             inventory.erase(inventory.begin() + index);
             break;
@@ -181,7 +185,7 @@ void player::updateStatusEffects()
     {
         takeDamage(poisonDamage);
         poisonTurns--;
-        std::cout << "[VELENO] Subisci " << poisonDamage << " danni da veleno! (Turni rimasti: " 
+        std::cout << "[POISON] Take " << poisonDamage << " poison damage! (Turns remaining: " 
                   << poisonTurns << " | HP: " << HP << ")\n";
     }
 }
@@ -239,4 +243,45 @@ void dragon::insertStats()
     attack = 35;
     defence = 25;
     speed = 5.0;
+}
+
+int goblin::calculateAttackDamage() const
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100);
+
+    // The Goblin has a 25% chance to perform a quick double strike.
+    if (dis(gen) <= 25)
+    {
+        std::cout << "[GOBLIN ABILITY] Quick double strike! ";
+        return attack + 5;
+    }
+    return attack;
+}
+
+int orc::calculateAttackDamage() const
+{
+    // When the Orc drops below 40 HP, it enters a Frenzy (+50% attack)
+    if (HP < 40)
+    {
+        std::cout << "[ORC'S FURY] The orc is wounded and strikes out in rage! ";
+        return static_cast<int>(attack * 1.5);
+    }
+    return attack;
+}
+
+int dragon::calculateAttackDamage() const
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 100);
+
+    // The Dragon has a 30% chance of using Fiery Breath.
+    if (dis(gen) <= 30)
+    {
+        std::cout << "[FIERY BREATH] The dragon spews devastating flames! ";
+        return attack + 15;
+    }
+    return attack;
 }
