@@ -8,8 +8,10 @@
 int main() {
     player p;
     p.InsertName();
+    p.randomHP();
     p.randomAttack();
     p.randomDefence();
+    p.randomSpeed();
     p.randomLuck();
     p.PrintStats();
 
