@@ -23,7 +23,7 @@ void Item::print() const
         break;
     }
 
-    std::cout << "[" << catName << "]" << name << "(value: +" << value << ") - " << description << "\n";
+    std::cout << "[ " << catName << " ]" << name << " (value: +" << value << " ) - " << description << "\n";
 }
 
 Item generateRandomLoot()

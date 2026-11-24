@@ -70,11 +70,11 @@ void dungeon::print(const player& p) const
                 switch (rooms[r][c])
                 {
                     case roomType::Empty: simbol = ' '; break;
-                    case roomType::Enemy: simbol = 'E'; break;
-                    case roomType::Trap:  simbol = 'T'; break;
-                    case roomType::Loot:  simbol = 'L'; break;
-                    case roomType::Boss:  simbol = 'B'; break;
-                    case roomType::Exit:  simbol = 'X'; break;
+                    case roomType::Enemy: simbol = ' '; break;
+                    case roomType::Trap:  simbol = ' '; break;
+                    case roomType::Loot:  simbol = ' '; break;
+                    case roomType::Boss:  simbol = ' '; break;
+                    case roomType::Exit:  simbol = ' '; break;
                         
                 }
             }

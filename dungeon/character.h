@@ -5,14 +5,11 @@
 #include <vector>
 #include "item.h"
 
-
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
-
 
 // class character
 class character
 {
-
 protected:
     std::string name;
     int HP{};
@@ -27,19 +24,19 @@ public:
     character(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed); // constructor
     virtual ~character() = default; // default destructor
 
-    //function for combact and UI
+    // function for combat and UI
+    std::string getName() const { return name; }
     int getHP() const { return HP; }
+    int getAttack() const { return attack; }
     int getDefence() const { return defence; }
     double getSpeed() const { return speed; }
     int getLuck() const { return luck; }
     bool isAlive() const { return HP > 0; }
 
-    //health management
+    // health management
     void takeDamage(int dmg);
     void heal(int amount);
-
 };
-
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -49,40 +46,42 @@ class player : public character
 private:
     int posX{0};
     int posY{0};
+    int poisonTurns{0};
+    int poisonDamage{0};
 
     std::vector<Item> inventory;
-    Item equippedWaepon{"Pugni", ItemCategory::weapon, 0, "No weapon equipped"};
-    Item equippedArmor{"clothes", ItemCategory::armor, 0, "No armor equipped"};
+    Item equippedWeapon{"Pugni", ItemCategory::weapon, 0, "No weapon equipped"};
+    Item equippedArmor{"Clothes", ItemCategory::armor, 0, "No armor equipped"};
 
 public:
-
     player() = default; // default constructor
     player(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed, int inLuck); // constructor
 
+    void InsertName();    // method to insert the name of the character
+    void randomHP();      // method to generate a random HP
+    void randomAttack();  // method to generate a random attack value
+    void randomDefence(); // method to generate a random defence value
+    void randomSpeed();   // method to generate random speed
+    void randomLuck();    // method to generate a random luck value
+    void PrintStats();    // print player stats
 
-    void InsertName();// method to insert the name of the character
-    void randomHP(); // method to generate a random HP
-    void randomAttack(); // method to generate a random attack value based on the character's attack stat
-    void randomDefence(); // method to generate a random defence value based on the character's
-    void randomSpeed(); // method to generate random speed
-    void randomLuck(); // method to generate a random luck value based on the character's
-    void PrintStats(); // print player stats
-
-
+    // for the position of the player
     int getX() const { return posX; }
     int getY() const { return posY; }
     void setPosition(int newX, int newY) { posX = newX; posY = newY; }
 
-    //method for the total attack and defence after find a weapon or a armor
-    int getTotalAttack() const {return attack + equippedWaepon.value; };
-    int getTotalDefence() const {return defence + equippedArmor.value;};
+    // method for the total attack and defence after finding a weapon or an armor
+    int getTotalAttack() const { return attack + equippedWeapon.value; }
+    int getTotalDefence() const { return defence + equippedArmor.value; }
 
-    //method inventory
+    // method inventory
     void addItem(const Item& newItem);
     void openInventory();
 
+    // method for the poison system
+    void applyPoison(int turns, int dmg) { poisonTurns = turns; poisonDamage = dmg; }
+    void updateStatusEffects();
 };
-
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -92,10 +91,7 @@ class enemy : public character
 public:
     enemy() = default; // default constructor
     enemy(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed); // constructor
-    
 };
-
-
 
 // class goblin
 class goblin : public enemy
@@ -106,8 +102,6 @@ public:
     void insertStats(); // insert stats of the goblin
 };
 
-
-
 // class skeleton
 class skeleton : public enemy
 {
@@ -116,8 +110,6 @@ public:
     skeleton(int inHP, int inAttack, int inDefence, double inSpeed); // constructor
     void insertStats(); // insert stats of the skeleton
 };
-
-
 
 // class ORC
 class orc : public enemy
@@ -128,8 +120,6 @@ public:
     void insertStats(); // insert stats of the orc     
 };
 
-
-
 // class dragon
 class dragon : public enemy
 {
@@ -137,9 +127,6 @@ public:
     dragon(); // default constructor
     dragon(int inHP, int inAttack, int inDefence, double inSpeed); // constructor
     void insertStats(); // insert stats of the dragon
-
 };
-
-
 
 #endif

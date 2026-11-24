@@ -4,10 +4,11 @@
 
 using namespace std;
 
-character::character(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed) // constructor
+character::character(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed)
 {
     name = inName;
     HP = inHP;
+    maxHP = inHP;
     attack = inAttack;
     defence = inDefence;
     speed = inSpeed;
@@ -18,56 +19,57 @@ void character::takeDamage(int dmg)
 {
     if (dmg < 1) dmg = 1;
     HP -= dmg;
-    if(HP < 0 ) HP = 0;
+    if (HP < 0) HP = 0;
 }
 
 void character::heal(int amount)
 {
     HP += amount;
-    if(HP > maxHP) HP = maxHP; 
+    if (HP > maxHP) HP = maxHP; 
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
-
-void player::InsertName() // method to insert the name of the player
+void player::InsertName()
 {
     std::cout << "insert your name: ";
     std::getline(std::cin >> std::ws, name);
 }
 
-void player::randomHP() // method to generate a random HP
+void player::randomHP()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 100);
+    std::uniform_int_distribution<> dis(80, 150); // Range bilanciato per affrontare il Drago
     HP = dis(gen);
+    maxHP = HP;
 }
 
-void player::randomAttack() // method to generate a random attack value for the player
+void player::randomAttack()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 30);
+    std::uniform_int_distribution<> dis(15, 35);
     attack = dis(gen);
 }
 
-void player::randomDefence() // method to generate a random defence value for the player
+void player::randomDefence()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 100);
+    std::uniform_int_distribution<> dis(10, 60);
     defence = dis(gen);
 }
 
-void player::randomSpeed() // method to generate a random speed
+void player::randomSpeed()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, 10);
     speed = dis(gen);
 }
-void player::randomLuck() // method to generate a random luck value for the player
+
+void player::randomLuck()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -75,35 +77,33 @@ void player::randomLuck() // method to generate a random luck value for the play
     luck = dis(gen);
 }
 
-void player::PrintStats() // method to print the stats of the player
+void player::PrintStats()
 {
     std::cout << "--------------------------" << std::endl;
     std::cout << "Player Stats:\n";
     std::cout << "Name: " << name << "\n";
-    std::cout << "HP: " << HP << "\n";
-    std::cout << "Attack: " << attack << "\n";
-    std::cout << "Defence: " << defence << "\n";
+    std::cout << "HP: " << HP << "/" << maxHP << "\n";
+    std::cout << "Attack: " << getTotalAttack() << " (Base: " << attack << " + " << equippedWeapon.value << ")\n";
+    std::cout << "Defence: " << getTotalDefence() << " (Base: " << defence << " + " << equippedArmor.value << ")\n";
     std::cout << "Speed: " << speed << "\n";
     std::cout << "Luck: " << luck << "\n";
     std::cout << "--------------------------" << std::endl;
 }
 
-// inventory
+// Inventory
 
 void player::addItem(const Item& newitem)
 {
     inventory.push_back(newitem);
-    std::cout << "you have collected";
+    std::cout << "You have collected: ";
     newitem.print();
 }
 
 void player::openInventory()
 {
-
     std::cout << "\n=== CURRENT EQUIPMENT ===\n";
-    std::cout << "Arma: " <<  equippedWaepon.name << " (+" <<  equippedWaepon.value << " ATK)\n";
+    std::cout << "Arma: " << equippedWeapon.name << " (+" << equippedWeapon.value << " ATK)\n";
     std::cout << "Armatura: " << equippedArmor.name << " (+" << equippedArmor.value << " DEF)\n";
-
 
     std::cout << "\n=== ZAINO ===\n";
     if (inventory.empty())
@@ -122,7 +122,7 @@ void player::openInventory()
     int choice{};
     std::cin >> choice;
 
-    if(choice <= 0 || choice > static_cast<int>(inventory.size()))
+    if (choice <= 0 || choice > static_cast<int>(inventory.size()))
     {
         std::cout << "Zaino chiuso.\n";
         return;
@@ -133,91 +133,110 @@ void player::openInventory()
 
     switch (selected.category)
     {
-    }
+        case ItemCategory::potion:
+            heal(selected.value);
+            std::cout << "You drink " << selected.name << "! Current HP: " << HP << "/" << maxHP << "\n";
+            inventory.erase(inventory.begin() + index);
+            break;
 
+        case ItemCategory::weapon:
+            if (equippedWeapon.value > 0)
+            {
+                inventory.push_back(equippedWeapon);
+            }
+            equippedWeapon = selected;
+            inventory.erase(inventory.begin() + index);
+            std::cout << "Hai equipaggiato: " << equippedWeapon.name << "!\n";
+            break;
+
+        case ItemCategory::armor:
+            if (equippedArmor.value > 0)
+            {
+                inventory.push_back(equippedArmor);
+            }
+            equippedArmor = selected;
+            inventory.erase(inventory.begin() + index);
+            std::cout << "Hai indossato: " << equippedArmor.name << "!\n";
+            break;
+
+        case ItemCategory::special:
+            if (selected.name.find("Clover") != std::string::npos)
+            {
+                luck += selected.value;
+                std::cout << "La tua Fortuna aumenta di " << selected.value << "! (Luck: " << luck << ")\n";
+            }
+            else
+            {
+                speed += selected.value;
+                std::cout << "La tua Velocita' aumenta di " << selected.value << "! (Speed: " << speed << ")\n";
+            }
+            inventory.erase(inventory.begin() + index);
+            break;
+    }
 }
 
+void player::updateStatusEffects()
+{
+    if (poisonTurns > 0)
+    {
+        takeDamage(poisonDamage);
+        poisonTurns--;
+        std::cout << "[VELENO] Subisci " << poisonDamage << " danni da veleno! (Turni rimasti: " 
+                  << poisonTurns << " | HP: " << HP << ")\n";
+    }
+}
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
-
 
 enemy::enemy(std::string inName, int inHP, int inAttack, int inDefence, double inSpeed)
     : character(inName, inHP, inAttack, inDefence, inSpeed)
 {
 }
 
-goblin::goblin()
-    : enemy("Goblin", 50, 10, 5, 6)
-{
-}
+goblin::goblin() : enemy("Goblin", 50, 10, 5, 3.0) {}
+goblin::goblin(int inHP, int inAttack, int inDefence, double inSpeed) : enemy("Goblin", inHP, inAttack, inDefence, inSpeed) {}
 
-goblin::goblin(int inHP, int inAttack, int inDefence, double inSpeed)
-    : enemy("Goblin", inHP, inAttack, inDefence, inSpeed)
-{
-}
+orc::orc() : enemy("Orc", 100, 20, 10, 2.0) {}
+orc::orc(int inHP, int inAttack, int inDefence, double inSpeed) : enemy("Orc", inHP, inAttack, inDefence, inSpeed) {}
 
-orc::orc()
-    : enemy("Orc", 100, 20, 10, 2)
-{
-}
+skeleton::skeleton() : enemy("Skeleton", 60, 12, 6, 4.0) {}
+skeleton::skeleton(int inHP, int inAttack, int inDefence, double inSpeed) : enemy("Skeleton", inHP, inAttack, inDefence, inSpeed) {}
 
-orc::orc(int inHP, int inAttack, int inDefence, double inSpeed)
-    : enemy("Orc", inHP, inAttack, inDefence, inSpeed)
-{
-}
+dragon::dragon() : enemy("Dragon", 200, 35, 25, 5.0) {}
+dragon::dragon(int inHP, int inAttack, int inDefence, double inSpeed) : enemy("Dragon", inHP, inAttack, inDefence, inSpeed) {}
 
-skeleton::skeleton()
-    : enemy("Skeleton", 30, 7, 4, 4)
-{
-}
-
-skeleton::skeleton(int inHP, int inAttack, int inDefence, double inSpeed)
-    : enemy("Skeleton", inHP, inAttack, inDefence, inSpeed)
-{
-}
-
-dragon::dragon()
-    : enemy("Dragon", 175, 35, 25, 15)
-{
-}
-
-dragon::dragon(int inHP, int inAttack, int inDefence, double inSpeed)
-    : enemy("Dragon", inHP, inAttack, inDefence, inSpeed)
-{
-}
-
-void goblin::insertStats() // method to insert the stats of the goblin
+void goblin::insertStats()
 {
     name = "Goblin";
     HP = 50;
     attack = 10;
     defence = 5;
-    speed = 5;
+    speed = 3.5;
 }
 
-void orc::insertStats() // method to insert the stats of the orc
+void orc::insertStats()
 {
     name = "Orc";
     HP = 100;
     attack = 20;
     defence = 10;
-    speed = 2;
+    speed = 2.0;
 }
 
-void skeleton::insertStats() // method to insert the stats of the skeleton
+void skeleton::insertStats()
 {
     name = "Skeleton";
-    HP = 30;
-    attack = 7;
-    defence = 4;
-    speed = 4;
+    HP = 60;
+    attack = 12;
+    defence = 6;
+    speed = 3.0;
 }
 
-void dragon::insertStats() // method to insert the stats of the dragon
+void dragon::insertStats()
 {
     name = "Dragon";
-    HP = 175;
+    HP = 200;
     attack = 35;
     defence = 25;
-    speed = 15;
+    speed = 5.0;
 }
