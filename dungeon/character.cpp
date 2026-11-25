@@ -32,7 +32,7 @@ void character::heal(int amount)
 
 void player::InsertName()
 {
-    std::cout << "insert your name: ";
+    std::cout << "Insert your name: ";
     std::getline(std::cin >> std::ws, name);
 }
 
@@ -79,11 +79,17 @@ void player::randomLuck()
 
 void player::PrintStats()
 {
-    std::cout << "============================" << std::endl;
-    std::cout << "         Welcome to:        " << std::endl;
-    std::cout << "    THE SCORCHING DUNGEON   " << std::endl;
-    std::cout << "============================" << std::endl;
-    std::cout << "--------------------------" << std::endl;
+    std::cout << "======================================================================================================================================================================================================" << std::endl;
+    std::cout << "                                                                                                   Welcome to:                                                                                        "  << std::endl;
+    std::cout << "                                                                                             THE SCORCHING DUNGEON                                                                                    " << std::endl;
+    std::cout << "======================================================================================================================================================================================================" << std::endl;
+    std::cout << "The iron gate slams shut behind you, sealing the exit. Before you lie the tunnels of the Sunken Citadel—a dark labyrinth where the air reeks of rust, disturbed earth, and ash." << std::endl;
+    std::cout << "Threats lurk in the shadows, waiting to ambush you: you hear shrill giggles and stealthy footsteps in the narrow passages, the dry clatter of bones stirring to life in the colder chambers," << std::endl;
+    std::cout << "and the heavy grunts of armed brutes guarding the main thoroughfares." << std::endl;
+    std::cout << "Push past them and descend to the natural furnace at the heart of the underworld. There, Vaelgorath — the Architect of Embers— awaits you: a dragon with obsidian scales, whose breath can melt stone." << std::endl;
+    std::cout << "Check your gear and press onward; to make it out alive, you must bring him down." << std::endl;
+    std::cout << "                                                                                                                                                                                                      " << std::endl;
+    std::cout << "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
     std::cout << "Player Stats:\n";
     std::cout << "Name: " << name << "\n";
     std::cout << "HP: " << HP << "/" << maxHP << "\n";
@@ -91,7 +97,7 @@ void player::PrintStats()
     std::cout << "Defence: " << getTotalDefence() << " (Base: " << defence << " + " << equippedArmor.value << ")\n";
     std::cout << "Speed: " << speed << "\n";
     std::cout << "Luck: " << luck << "\n";
-    std::cout << "--------------------------" << std::endl;
+    std::cout << "---------------------------------" << std::endl;
 }
 
 // Inventory
@@ -110,6 +116,7 @@ void player::openInventory()
     std::cout << "Armor: " << equippedArmor.name << " (+" << equippedArmor.value << " DEF)\n";
 
     std::cout << "\n=== BACKPACK ===\n";
+    std::cout << "                    " << std::endl;
     if (inventory.empty())
     {
         std::cout << "The backpack is empty.\n";

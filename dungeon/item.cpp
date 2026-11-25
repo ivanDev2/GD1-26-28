@@ -23,29 +23,29 @@ void Item::print() const
         break;
     }
 
-    std::cout << "[ " << catName << " ]" << name << " (value: +" << value << " ) - " << description << "\n";
+    std::cout << "[ " << catName << " ]  " << name << " ( value: +" << value << " ) : " << description << "\n";
 }
 
 Item generateRandomLoot()
 {
     static const std::vector<Item> lootPool = {
         // Potion (Consumable)
-        {"Minor Potion", ItemCategory::potion, 30, "Restore 30 HP."},
-        {"Major Potion", ItemCategory::potion, 60, "Restore 60 HP."},
+        {" Minor Potion ", ItemCategory::potion, 30, " Restore 30 HP "},
+        {" Major Potion ", ItemCategory::potion, 60, " Restore 60 HP "},
 
         // Weapons (Increase Attack)
-        {"Rusted Dagger", ItemCategory::weapon, 5, "Increases attack by 5."},
-        {"Steel Sword", ItemCategory::weapon, 12, "Increases attack by 12."},
-        {"Berserker's Axe", ItemCategory::weapon, 20, "Increases attack by 20."},
+        {" Rusted Dagger ", ItemCategory::weapon, 5, " Increases attack by 5 "},
+        {" Steel Sword ", ItemCategory::weapon, 12, " Increases attack by 12 "},
+        {" Berserker's Axe ", ItemCategory::weapon, 20, " Increases attack by 20 "},
 
         // Armor (Increases Defence)
-        {"Wooden Shield", ItemCategory::armor, 8, "Increases defence by 8."},
-        {"Chainmail", ItemCategory::armor, 18, "Increases defence by 18."},
-        {"Dragon Armor", ItemCategory::armor, 30, "Increases defence by 30."},
+        {" Wooden Shield", ItemCategory::armor, 8, " Increases defence by 8 "},
+        {" Chainmail", ItemCategory::armor, 18, " Increases defence by 18 "},
+        {" Dragon Armor", ItemCategory::armor, 30, " Increases defence by 30 "},
 
         // Special Items (Unique effects)
-        {"Golden Four-Leaf Clover", ItemCategory::special, 15, "Permanently increases Luck by 15."},
-        {"Boots of the Wind", ItemCategory::special, 2, "Permanently increases Speed ​​by 2."}
+        {" Golden Four-Leaf Clover ", ItemCategory::special, 15, " Permanently increases Luck by 15 "},
+        {" Boots of the Wind ", ItemCategory::special, 2, " Permanently increases Speed ​​by 2 "}
     };
 
     static std::random_device rd;

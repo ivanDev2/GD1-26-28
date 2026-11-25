@@ -27,16 +27,22 @@ void Trap::trigger(player& p) const
     {
         case TrapType::Spike:
             std::cout << "SPIKE TRAP! Spikes emerge from the floor (-15 HP)!\n";
+            std::cout << "                                                   " << std::endl;
+            std::cout << "--------------------------------------------------" << std::endl;
             p.takeDamage(15);
             break;
 
         case TrapType::Poison:
-            std::cout << "POISON TRAP! A toxic cloud envelops you (5 damage for 3 turns)!\n";
+            std::cout << "POISON TRAP! A toxic cloud envelops you (5 damage for 3 turns)!\n"; 
+            std::cout << "                                                               " << std::endl;
+            std::cout << "---------------------------------------------------------------" << std::endl;
             p.applyPoison(3, 5);
             break;
 
         case TrapType::Explosive:
             std::cout << "EXPLOSIVE TRAP! A landmine detonates beneath your feet (-35 HP)!\n";
+            std::cout << "                                                                " << std::endl;
+            std::cout << "----------------------------------------------------------------" << std::endl;
             p.takeDamage(35);
             break;
     }

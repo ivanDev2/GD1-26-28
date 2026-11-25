@@ -20,10 +20,14 @@ bool startCombat(player& p, enemy& e)
 
     // Chi ha la Speed più alta inizia per primo
     bool playerTurn = (p.getSpeed() >= e.getSpeed());
-    if (playerTurn)
+    if (playerTurn) {
+        std::cout << "                                 "  << std::endl;
         std::cout << "You're faster! You attack first .\n";
-    else
+    } else {
+        
+        std::cout << "                                                  " << std::endl;
         std::cout << e.getName() << " It is faster and attacks first !\n";
+    }
 
     while (p.isAlive() && e.isAlive())
     {
@@ -36,6 +40,7 @@ bool startCombat(player& p, enemy& e)
             p.updateStatusEffects();
             if (!p.isAlive()) break;
 
+            std::cout << "                                                      "  << std::endl;
             std::cout << "Choose action (1 = Attack, 2 = Inventory/Use Potion): ";
             int choice{};
             std::cin >> choice;
@@ -53,11 +58,12 @@ bool startCombat(player& p, enemy& e)
                 if (critRoll(gen) <= p.getLuck())
                 {
                     damage *= 2;
-                    std::cout << "CRITICAL HIT ! ";
+                    std::cout << "CRITICAL HIT! ";
                 }
 
                 e.takeDamage(damage);
                 std::cout << "Inflict " << damage << " damage to " << e.getName() << "!\n";
+                std::cout << "-------------------------------------------------" << std::endl;
             }
         }
         else
@@ -67,7 +73,8 @@ bool startCombat(player& p, enemy& e)
             if (damage < 1) damage = 1;
 
             p.takeDamage(damage);
-            std::cout << e.getName() << " inflicts upon you " << damage << " damages!\n";
+            std::cout << e.getName() << " Inflicts upon you " << damage << " damages!\n";
+            std::cout << "-------------------------------------------------" << std::endl;
         }
 
         playerTurn = !playerTurn;
