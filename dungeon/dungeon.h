@@ -27,7 +27,7 @@ private:
     void placeRooms(int type, int count); // method to generate the dungeon layout
 
 public:
-    dungeon(int r=10, int c=10);
+    dungeon(int r=15, int c=15);
     ~dungeon() = default;
 
     void generate(); // method to generate the dungeon layout
