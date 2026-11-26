@@ -92,6 +92,7 @@ bool startCombat(player& p, enemy& e)
     }
 }
 
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 int main() {
     player p;
     p.InsertName();
@@ -109,7 +110,10 @@ int main() {
     std::uniform_int_distribution<> enemyPicker(1, 3);
 
     bool isPlaying = true;
+    int currentFloor = 1;
+    int maxFloor = 3;
     char input{};
+
 
     while(isPlaying)
     {
@@ -207,6 +211,12 @@ int main() {
                 dungeon.clearrooms(nextX, nextY);
                 break;
 
+            case roomType::Stairs:
+            {
+                currentFloor++;
+                dungeon.generate(currentFloor, maxFloor);
+                p.setPosition(0, 0);
+            }
             case roomType::Boss:
             {
                 std::cout << "The Boss Dragon is here!\n";

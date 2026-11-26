@@ -11,7 +11,8 @@ enum class roomType
     Trap,
     Loot,
     Boss,
-    Exit
+    Exit,
+    Stairs
 };
 
 
@@ -30,7 +31,7 @@ public:
     dungeon(int r=7, int c=8);
     ~dungeon() = default;
 
-    void generate(); // method to generate the dungeon layout
+    void generate(int floor, int maxFloor); // method to generate the dungeon layout
 
     void print(const player& p) const; // method to print the player's position in the dungeon
     

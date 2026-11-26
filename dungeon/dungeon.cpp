@@ -6,7 +6,7 @@ dungeon::dungeon(int r, int c) : rows(r), cols(c) {
     generate();
 }
 
-void dungeon::generate(){
+void dungeon::generate(int floor, int maxFloor){
 
     // Generate the dungeon layout
     rooms.assign(rows, std::vector<roomType>(cols, roomType::Empty));
@@ -14,10 +14,16 @@ void dungeon::generate(){
     // place the exit room at the bottom right corner
     rooms[rows - 1][cols - 1] = roomType::Exit;
 
-    placeRooms(static_cast<int>(roomType::Enemy), 12); // place 10 enemy rooms
-    placeRooms(static_cast<int>(roomType::Trap), 10); // place 5 trap rooms
-    placeRooms(static_cast<int>(roomType::Loot), 15); // place 5 loot rooms
-    placeRooms(static_cast<int>(roomType::Boss), 1); // place 1 boss room
+    if(floor < maxFloor){
+        placeRooms(static_cast<int>(roomType::Enemy), 12); // place 10 enemy rooms
+        placeRooms(static_cast<int>(roomType::Trap), 10); // place 5 trap rooms
+        placeRooms(static_cast<int>(roomType::Loot), 15); // place 5 loot rooms
+        placeRooms(static_cast<int>(roomType::Stairs),1); //pace 1 stairs room
+    } else{
+        placeRooms(static_cast<int>(roomType::Boss), 1); // place 1 boss room
+    }
+    
+    
 
 }
 
@@ -73,8 +79,10 @@ void dungeon::print(const player& p) const
                     case roomType::Enemy: simbol = ' '; break;
                     case roomType::Trap:  simbol = ' '; break;
                     case roomType::Loot:  simbol = ' '; break;
+                    case roomType::Stairs:simbol = 'S'; break;
                     case roomType::Boss:  simbol = ' '; break;
-                    case roomType::Exit:  simbol = ' '; break;
+                    case roomType::Exit:  simbol = 'X'; break;
+                   
                         
                 }
             }
