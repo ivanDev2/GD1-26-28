@@ -14,9 +14,9 @@ void dungeon::generate(){
     // place the exit room at the bottom right corner
     rooms[rows - 1][cols - 1] = roomType::Exit;
 
-    placeRooms(static_cast<int>(roomType::Enemy), 3); // place 10 enemy rooms
-    placeRooms(static_cast<int>(roomType::Trap), 3); // place 5 trap rooms
-    placeRooms(static_cast<int>(roomType::Loot), 4); // place 5 loot rooms
+    placeRooms(static_cast<int>(roomType::Enemy), 12); // place 10 enemy rooms
+    placeRooms(static_cast<int>(roomType::Trap), 10); // place 5 trap rooms
+    placeRooms(static_cast<int>(roomType::Loot), 15); // place 5 loot rooms
     placeRooms(static_cast<int>(roomType::Boss), 1); // place 1 boss room
 
 }

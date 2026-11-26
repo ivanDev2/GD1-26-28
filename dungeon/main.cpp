@@ -102,7 +102,7 @@ int main() {
     p.randomLuck();
     p.PrintStats();
 
-    dungeon dungeon(4, 5);
+    dungeon dungeon(7, 8);
 
     static std::random_device rd;
     static std::mt19937 gen(rd());
